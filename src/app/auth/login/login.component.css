@@ -5,3 +5,14 @@
 .example-spacer{
   flex: 1 1 auto;
 }
+
+.checkbox-password{
+
+  display: flex;
+  padding-left: 10px;
+  height: 40px;
+}
+
+.checkbox-text-gray{
+  color: rgb(135, 94, 94) ;
+}

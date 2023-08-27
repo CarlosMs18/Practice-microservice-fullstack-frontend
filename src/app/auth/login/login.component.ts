@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   public loginForm : FormGroup = this.fb.group({
-    username : ['',Validators.required],
+    username : [localStorage.getItem('username') || '',Validators.required],
     password : ['',Validators.required],
     remember : ['']
   })
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
   }
 
   campoValido(campo : string){
@@ -40,31 +42,29 @@ export class LoginComponent implements OnInit {
     this.loginForm.markAllAsTouched();
     return;
   }
-    console.log(this.loginForm.value)
-  /* const {remember , ...data} = this.loginForm.value */
- /*  this.authService.loginUsuario(data)
+
+  const {remember , ...data} = this.loginForm.value
+  this.authService.loginUsuario(data)
             .subscribe(
               {
                 next :resp => {
+
                   if(remember){
-                    localStorage.setItem('email',this.loginForm.get('email')?.value)
+                    console.log('ojito!')
+                    localStorage.setItem('username',this.loginForm.get('username')?.value)
                   }else{
-                    localStorage.removeItem('email')
+                    localStorage.removeItem('username')
                   }
                   this.router.navigateByUrl('/')
 
                 },
-                error : (err :HttpErrorResponse) => {
+                error : (errrorr :HttpErrorResponse) => {
 
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: err.error.msg
+                    console.log(errrorr);
 
-                  })
                 }
               }
-            ) */
+            )
 }
 
 }

@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -13,14 +13,15 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   public loginForm : FormGroup = this.fb.group({
-    username : [localStorage.getItem('username') || '',Validators.required],
+    username : [localStorage.getItem('username') || '',[Validators.required, Validators.minLength(4)]],
     password : ['',Validators.required],
     remember : ['']
   })
   constructor(
     private fb: FormBuilder,
     private router :Router,
-    private authService : AuthService
+    private authService : AuthService,
+    private toastr : ToastrService
 
   ) { }
 
@@ -50,16 +51,16 @@ export class LoginComponent implements OnInit {
                 next :resp => {
 
                   if(remember){
-                    console.log('ojito!')
-                    localStorage.setItem('username',this.loginForm.get('username')?.value)
+                    this.toastr.success("Credenciales correcta","Redirigiendo a la pantalla principal");
+                    localStorage.setItem('token',this.loginForm.get('token')?.value)
                   }else{
-                    localStorage.removeItem('username')
+                    localStorage.removeItem('token')
                   }
                   this.router.navigateByUrl('/')
 
                 },
                 error : (errrorr :HttpErrorResponse) => {
-
+                    this.toastr.error("Credenciales incorrectas", "El username y/o password son incorrectos");
                     console.log(errrorr);
 
                 }

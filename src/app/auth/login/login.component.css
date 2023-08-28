@@ -20,3 +20,16 @@
 .input-contraseña{
   margin-top: 10px;
 }
+
+.text-link{
+  padding-left: 10px;
+  display: block;
+  height: 30px;
+  text-decoration: none;
+  color : rgb(90, 76, 76);
+}
+
+.text-link span{
+  color : rgb(224, 83, 83);
+  font-weight: bold;
+}
